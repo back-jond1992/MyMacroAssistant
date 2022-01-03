@@ -2,18 +2,21 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import {useNavigation} from '@react-navigation/native';
 
 const ResetPasswordScreen = () => {
   const [code, setCode] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
 
+  const navigation = useNavigation();
+
   const onReset = () => {
     console.warn('Log in');
   };
 
   const onBackToLogin = () => {
-    console.warn('Log in');
+    navigation.navigate('Login');
   };
 
   return (

@@ -2,17 +2,20 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import {useNavigation} from '@react-navigation/native';
 
 const LogInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigation = useNavigation();
 
   const onLogIn = () => {
     console.warn('Log in');
   };
 
   const onForgotPassword = () => {
-    console.warn('Log in');
+    navigation.navigate('ForgotPassword');
   };
 
   const onLogInGoogle = () => {
@@ -28,7 +31,7 @@ const LogInScreen = () => {
   };
 
   const onNoAccount = () => {
-    console.warn('Sign up');
+    navigation.navigate('SignUp');
   };
 
   return (

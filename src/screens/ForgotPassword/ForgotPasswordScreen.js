@@ -2,16 +2,19 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import {useNavigation} from '@react-navigation/native';
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('');
 
+  const navigation = useNavigation();
+
   const onSend = () => {
-    console.warn('Log in');
+    navigation.navigate('ResetPassword');
   };
 
   const onBackToLogin = () => {
-    console.warn('Log in');
+    navigation.navigate('Login');
   };
 
   return (
