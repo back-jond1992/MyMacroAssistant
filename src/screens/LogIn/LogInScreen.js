@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 
 const LogInScreen = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +12,11 @@ const LogInScreen = () => {
   const navigation = useNavigation();
 
   const onLogIn = () => {
-    console.warn('Log in');
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        navigation.navigate('HomePage');
+      });
   };
 
   const onForgotPassword = () => {

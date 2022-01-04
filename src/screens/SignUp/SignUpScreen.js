@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +13,26 @@ const SignUpScreen = () => {
   const navigation = useNavigation();
 
   const onSignUp = () => {
-    console.warn('Log in');
+    if (password === passwordCheck) {
+      auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('User account created & signed in!');
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            alert('That email address is already in use!');
+          }
+          if (error.code === 'auth/invalid-email') {
+            alert('That email address is invalid!');
+          }
+          if (error.code === 'auth/weak-password') {
+            alert('Password must be at least 6 characters!');
+          }
+        });
+    } else {
+      alert('Passwords do not match!');
+    }
   };
 
   const onSigUpGoogle = () => {
