@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MacroProject</string>
+    <string name="facebook_app_id">4594021370667090</string>
+    <string name="fb_login_protocol_scheme">fb4594021370667090</string>
+
 </resources>

@@ -54,7 +54,7 @@ const SignUpScreen = () => {
       });
   };
 
-  const onSignUpInstagram = () => {
+  const onSignUpFacebook = () => {
     console.warn('Log in');
   };
 
@@ -98,8 +98,8 @@ const SignUpScreen = () => {
         />
 
         <Button
-          onPress={onSignUpInstagram}
-          text={'Sign up with Instagram'}
+          onPress={onSignUpFacebook}
+          text={'Sign up with Facebook'}
           backgroundColor={'#c13584'}
         />
 
