@@ -1,9 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  webClientId:
+    '721739332700-qk34a35uh16ctoimsio90upj5mviq07m.apps.googleusercontent.com',
+});
 
 const LogInScreen = () => {
   const [email, setEmail] = useState('');
@@ -23,9 +29,17 @@ const LogInScreen = () => {
     navigation.navigate('ForgotPassword');
   };
 
-  const onLogInGoogle = () => {
-    console.warn('Log in');
-  };
+  async function onLogInGoogle() {
+    const {idToken} = await GoogleSignin.signIn();
+    console.log('this is id:', idToken);
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    console.log('credentials ----------', googleCredential);
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(googleCredential);
+  }
 
   const onLogInInstagram = () => {
     console.warn('Log in');
@@ -64,7 +78,11 @@ const LogInScreen = () => {
         <Text style={styles.text}>Or</Text>
 
         <Button
-          onPress={onLogInGoogle}
+          onPress={() => {
+            onLogInGoogle().then(() => {
+              console.log('logged in');
+            });
+          }}
           text={'Log in with Google'}
           backgroundColor={'#4285F4'}
         />
