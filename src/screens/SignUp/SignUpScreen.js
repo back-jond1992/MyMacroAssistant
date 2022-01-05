@@ -4,6 +4,12 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  webClientId:
+    '721739332700-qk34a35uh16ctoimsio90upj5mviq07m.apps.googleusercontent.com',
+});
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState('');
@@ -35,17 +41,26 @@ const SignUpScreen = () => {
     }
   };
 
-  const onSigUpGoogle = () => {
-    console.warn('Log in');
+  const onSignUpGoogle = () => {
+    return GoogleSignin.signIn()
+      .then(({idToken}) => {
+        return auth.GoogleAuthProvider.credential(idToken);
+      })
+      .then(googleCredential => {
+        auth().signInWithCredential(googleCredential);
+      })
+      .then(() => {
+        navigation.navigate('HomePage');
+      });
   };
 
   const onSignUpInstagram = () => {
     console.warn('Log in');
   };
 
-  const onSignUpApple = () => {
-    console.warn('Log in');
-  };
+  // const onSignUpApple = () => {
+  //   console.warn('Log in');
+  // };
 
   const onAlreadyHaveAccount = () => {
     navigation.navigate('Login');
@@ -77,7 +92,7 @@ const SignUpScreen = () => {
         <Text style={styles.text}>or</Text>
 
         <Button
-          onPress={onSigUpGoogle}
+          onPress={onSignUpGoogle}
           text={'Sign up with Google'}
           backgroundColor={'#4285F4'}
         />
@@ -88,11 +103,11 @@ const SignUpScreen = () => {
           backgroundColor={'#c13584'}
         />
 
-        <Button
+        {/* <Button
           onPress={onSignUpApple}
           text={'Sign up with Apple'}
           backgroundColor={'#000000'}
-        />
+        /> */}
 
         <Text style={styles.text}>Already have an account?</Text>
 

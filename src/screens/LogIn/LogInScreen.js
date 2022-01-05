@@ -22,6 +22,14 @@ const LogInScreen = () => {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         navigation.navigate('HomePage');
+      })
+      .catch(error => {
+        if (error.code === 'auth/user-not-found') {
+          alert('No account found with this email address!');
+        }
+        if (error.code === 'auth/wrong-password') {
+          alert('Incorrect password!');
+        }
       });
   };
 
@@ -29,25 +37,35 @@ const LogInScreen = () => {
     navigation.navigate('ForgotPassword');
   };
 
-  async function onLogInGoogle() {
-    const {idToken} = await GoogleSignin.signIn();
-    console.log('this is id:', idToken);
-
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    console.log('credentials ----------', googleCredential);
-
-    // Sign-in the user with the credential
-    return auth().signInWithCredential(googleCredential);
-  }
+  const onLogInGoogle = () => {
+    return GoogleSignin.signIn()
+      .then(({idToken}) => {
+        if (!auth().currentUser) {
+          return Promise.reject({
+            message: "You don't have an account. Please Sign up!",
+          });
+        } else {
+          return auth.GoogleAuthProvider.credential(idToken);
+        }
+      })
+      .then(googleCredential => {
+        auth().signInWithCredential(googleCredential);
+      })
+      .then(() => {
+        navigation.navigate('HomePage');
+      })
+      .catch(error => {
+        alert(`${error.message}`);
+      });
+  };
 
   const onLogInInstagram = () => {
     console.warn('Log in');
   };
 
-  const onLogInApple = () => {
-    console.warn('Log in');
-  };
+  // const onLogInApple = () => {
+  //   console.warn('Log in');
+  // };
 
   const onNoAccount = () => {
     navigation.navigate('SignUp');
@@ -78,11 +96,7 @@ const LogInScreen = () => {
         <Text style={styles.text}>Or</Text>
 
         <Button
-          onPress={() => {
-            onLogInGoogle().then(() => {
-              console.log('logged in');
-            });
-          }}
+          onPress={onLogInGoogle}
           text={'Log in with Google'}
           backgroundColor={'#4285F4'}
         />
@@ -93,11 +107,11 @@ const LogInScreen = () => {
           backgroundColor={'#c13584'}
         />
 
-        <Button
+        {/* <Button
           onPress={onLogInApple}
           text={'Log in with Apple'}
           backgroundColor={'#000000'}
-        />
+        /> */}
 
         <Text style={styles.text}>Not got an account?</Text>
 
