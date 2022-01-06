@@ -60,36 +60,39 @@ const LogInScreen = () => {
       });
   };
 
-  async function onLogInFacebook() {
-    // Attempt login with permissions
-    const result = await LoginManager.logInWithPermissions([
-      'public_profile',
-      'email',
-    ]);
+  const onLogInFacebook = () => {
+    return LoginManager.logInWithPermissions(['public_profile', 'email'])
+      .then(result => {
+        if (result.isCancelled) {
+          return Promise.reject({message: 'User cancelled the login process'});
+        }
 
-    if (result.isCancelled) {
-      throw 'User cancelled the login process';
-    }
-
-    // Once signed in, get the users AccesToken
-    const data = await AccessToken.getCurrentAccessToken();
-
-    if (!data) {
-      throw 'Something went wrong obtaining access token';
-    }
-
-    // Create a Firebase credential with the AccessToken
-    const facebookCredential = auth.FacebookAuthProvider.credential(
-      data.accessToken,
-    );
-
-    // Sign-in the user with the credential
-    return auth()
-      .signInWithCredential(facebookCredential)
+        return AccessToken.getCurrentAccessToken();
+      })
+      .then(data => {
+        if (!data) {
+          return Promise.reject({
+            message: 'Something went wrong obtaining access token',
+          });
+        }
+        if (!auth().currentUser) {
+          return Promise.reject({
+            message: "You don't have an account. Please Sign up!",
+          });
+        } else {
+          return auth.FacebookAuthProvider.credential(data.accessToken);
+        }
+      })
+      .then(facebookCredential => {
+        auth().signInWithCredential(facebookCredential);
+      })
       .then(() => {
         navigation.navigate('HomePage');
+      })
+      .catch(error => {
+        alert(`${error.message}`);
       });
-  }
+  };
 
   // const onLogInApple = () => {
   //   console.warn('Log in');
