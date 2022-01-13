@@ -34,7 +34,7 @@ const FacebookSignUp = () => {
         auth().signInWithCredential(facebookCredential);
       })
       .then(() => {
-        navigation.navigate('HomePage');
+        navigation.navigate('Details');
       })
       .catch(error => {
         alert(`${error.message}`);

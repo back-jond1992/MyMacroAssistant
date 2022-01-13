@@ -19,7 +19,7 @@ const EmailPasswordSignUp = () => {
           console.log('User account created & signed in!');
         })
         .then(() => {
-          navigation.navigate('HomePage');
+          navigation.navigate('Details');
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
