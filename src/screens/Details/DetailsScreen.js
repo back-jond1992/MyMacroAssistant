@@ -14,6 +14,19 @@ const DetailsScreen = () => {
   const [female, setFemale] = useState(false);
   const [activity, setActivity] = useState('');
 
+  const userDetails = {
+    name: name,
+    avatar_url: avatarURL,
+    weight: weight,
+    height: height,
+    age: age,
+    sex: male ? 'male' : 'female',
+    BMR: '',
+    TDEE: activity,
+  };
+
+  console.log(userDetails);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
@@ -73,6 +86,15 @@ const DetailsScreen = () => {
           ]}
           setValue={setActivity}
         />
+
+        <Checkbox value={male} setValue={setMale} />
+        <Text style={styles.text_secondary}>Lose weight</Text>
+
+        <Checkbox value={male} setValue={setMale} />
+        <Text style={styles.text_secondary}>Maintain weight</Text>
+
+        <Checkbox value={male} setValue={setMale} />
+        <Text style={styles.text_secondary}>Gain weight</Text>
       </View>
     </ScrollView>
   );
