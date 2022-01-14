@@ -1,8 +1,15 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import Input from '../../components/Input';
+import auth from '@react-native-firebase/auth';
+import Input from '../../components/Input/Input';
 import Checkbox from '../../components/Checkox/Checkbox';
+import Button from '../../components/Button';
 import DropDownBox from '../../components/DropDownBox/DropDownBox';
+import TDEECalculator from '../../UtilFunctions/TDEECalculator/TDEECalculator';
+import BMRCalculator from '../../UtilFunctions/BMRCalculator/BMRCalculator';
+import target from '../../UtilFunctions/Target/target';
+import postUser from '../../api/api';
+import {useNavigation} from '@react-navigation/native';
 
 const DetailsScreen = () => {
   const [name, setName] = useState('');
@@ -13,19 +20,56 @@ const DetailsScreen = () => {
   const [male, setMale] = useState(false);
   const [female, setFemale] = useState(false);
   const [activity, setActivity] = useState('');
+  const [deficit, setDeficit] = useState('');
+  const [maintain, setMaintain] = useState('');
+  const [surplus, setSurplus] = useState('');
+  const [disabled, setDisabled] = useState(true);
 
-  const userDetails = {
+  const email = auth().currentUser.email;
+
+  const sex = male ? 'male' : 'female';
+
+  const selectedTarget = deficit
+    ? 'deficit'
+    : surplus
+    ? 'surplus'
+    : 'maintenance';
+
+  const BMR = BMRCalculator(sex, weight, height, age);
+
+  const TDEE = TDEECalculator(activity);
+
+  const maintenance = Math.round(BMR * TDEE);
+
+  const targetCalories = target(selectedTarget, maintenance);
+
+  const newUser = {
     name: name,
-    avatar_url: avatarURL,
+    email: email,
+    avatar_url: avatarURL ? avatarURL : 'no image',
     weight: weight,
     height: height,
     age: age,
-    sex: male ? 'male' : 'female',
-    BMR: '',
-    TDEE: activity,
+    sex: sex,
+    BMR: BMR,
+    TDEE: TDEE,
+    maintenance: maintenance,
+    target: targetCalories,
   };
 
-  console.log(userDetails);
+  // Object.values(newUser).map(value => {
+  //   console.log(value === undefined);
+  // });
+
+  console.log(newUser);
+  console.log(disabled);
+
+  const onSubmit = () => {
+    postUser(newUser).then(response => {
+      console.log(response);
+      navigation.navigate('HomePage');
+    });
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -87,14 +131,21 @@ const DetailsScreen = () => {
           setValue={setActivity}
         />
 
-        <Checkbox value={male} setValue={setMale} />
+        <Checkbox value={deficit} setValue={setDeficit} />
         <Text style={styles.text_secondary}>Lose weight</Text>
 
-        <Checkbox value={male} setValue={setMale} />
+        <Checkbox value={maintain} setValue={setMaintain} />
         <Text style={styles.text_secondary}>Maintain weight</Text>
 
-        <Checkbox value={male} setValue={setMale} />
+        <Checkbox value={surplus} setValue={setSurplus} />
         <Text style={styles.text_secondary}>Gain weight</Text>
+
+        <Button
+          onPress={onSubmit}
+          text={'Submit'}
+          type={'primary'}
+          disabled={disabled}
+        />
       </View>
     </ScrollView>
   );

@@ -7,9 +7,11 @@ const Button = ({
   type = 'primary',
   backgroundColor,
   textColor,
+  disabled,
 }) => {
   return (
     <Pressable
+      disabled={disabled}
       onPress={onPress}
       style={[
         styles.container,

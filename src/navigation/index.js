@@ -20,7 +20,7 @@ const Navigation = () => {
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
         <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} /> */}
         <Stack.Screen name="Details" component={DetailsScreen} />
-        {/* <Stack.Screen name="HomePage" component={HomeScreen} /> */}
+        <Stack.Screen name="HomePage" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
