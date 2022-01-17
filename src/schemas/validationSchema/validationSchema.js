@@ -3,15 +3,14 @@ import * as yup from 'yup';
 const validationSchema = yup.object({
   name: yup.string().required(),
   email: yup.string().email().required(),
-
-  weight: yup.string().required(),
-  height: yup.string().required(),
-  age: yup.string().required(),
+  weight: yup.number().required().typeError('This field must contain a number'),
+  height: yup.number().required().typeError('This field must contain a number'),
+  age: yup.number().required().typeError('This field must contain a number'),
   sex: yup.string().required(),
-  BMR: yup.required(),
-  TDEE: yup.required(),
-  maintenance: yup.required(),
-  target: yup.required(),
+  BMR: yup.number().required(),
+  TDEE: yup.number().required(),
+  maintenance: yup.number().required(),
+  target: yup.number().required(),
 });
 
 export default validationSchema;

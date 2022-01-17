@@ -12,10 +12,11 @@ import postUser from '../../api/api';
 import {useNavigation} from '@react-navigation/native';
 import userContext from '../../contexts/userContexts/UserContext';
 import {Formik} from 'formik';
+import validationSchema from '../../schemas/validationSchema/validationSchema';
 
 const DetailsScreen = () => {
   const [name, setName] = useState('');
-  const [avatarURL, setAvatarURL] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [age, setAge] = useState('');
@@ -34,72 +35,48 @@ const DetailsScreen = () => {
 
   const sex = male ? 'male' : 'female';
 
+  const BMR = BMRCalculator(sex, weight, height, age);
+
+  const TDEE = TDEECalculator(activity);
+
+  const maintenance = Math.round(BMR * TDEE);
+
+  const targetCalories = target(selectedTarget, maintenance);
+
   const selectedTarget = deficit
     ? 'deficit'
     : surplus
     ? 'surplus'
     : 'maintenance';
 
-  // const newUser = {
-  //   name: name,
-  //   email: email,
-  //   avatar_url: avatarURL ? avatarURL : 'no image',
-  //   weight: weight,
-  //   height: height,
-  //   age: age,
-  //   sex: sex,
-  //   BMR: BMR,
-  //   TDEE: TDEE,
-  //   maintenance: maintenance,
-  //   target: targetCalories,
-  // };
+  const newUser = {
+    name: name,
+    email: email,
+    avatar_url: avatarUrl || 'no image',
+    weight: weight,
+    height: height,
+    age: age,
+    sex: sex,
+    BMR: BMR,
+    TDEE: TDEE,
+    maintenance: maintenance,
+    target: targetCalories,
+  };
 
-  // console.log(typeof newUser.BMR);
-  // console.log(disabled);
+  const [user, setUser] = useState(newUser);
 
-  // const onSubmit = () => {
-  //   postUser(newUser).then(response => {
-  //     setCurrentUser(response);
-  //     navigation.navigate('HomePage');
-  //   });
-  // };
-
-  console.log(activity);
+  console.log('outside new user', user);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
         <Formik
-          initialValues={{
-            name: '',
-            email: '',
-            avatar_url: '',
-            weight: '',
-            height: '',
-            age: '',
-            sex: '',
-            BMR: '',
-            TDEE: '',
-            maintenance: '',
-            target: '',
-          }}
+          initialValues={newUser}
+          validationSchema={validationSchema}
           onSubmit={values => {
-            if (values.avatar_url === '') {
-              values.avatar_url = 'no image';
-            }
-            (values.email = email),
-              (values.sex = sex),
-              (values.BMR = BMRCalculator(
-                sex,
-                values.weight,
-                values.height,
-                values.age,
-              )),
-              (values.TDEE = TDEECalculator(activity)),
-              (values.maintenance = Math.round(values.BMR * values.TDEE)),
-              (values.target = target(selectedTarget, values.maintenance));
-            console.log(values);
-            postUser(values).then(response => {
+            console.log('inside values', values);
+            console.log('inside new user', newUser);
+            postUser(newUser).then(response => {
               console.log(response);
               setCurrentUser(response);
               //     navigation.navigate('HomePage');
@@ -112,37 +89,45 @@ const DetailsScreen = () => {
               <Text style={styles.text_secondary}>Name</Text>
               <Input
                 placeholder="type your name here"
-                value={props.values.name}
-                setValue={props.handleChange('name')}
+                value={name}
+                setValue={setName}
               />
+              <Text style={styles.text_errors}>
+                {props.touched.name && props.errors.name}
+              </Text>
 
               <Text style={styles.text_secondary}>Avatar_url</Text>
               <Input
                 placeholder="image url goes here"
-                value={props.values.avatar_url}
-                setValue={props.handleChange('avatar_url')}
+                value={avatarUrl}
+                setValue={setAvatarUrl}
               />
 
               <Text style={styles.text_secondary}>Weight(pounds)</Text>
               <Input
                 placeholder="weight in pounds"
-                value={props.values.weight}
-                setValue={props.handleChange('weight')}
+                value={weight}
+                setValue={setWeight}
               />
+              <Text style={styles.text_errors}>
+                {props.touched.weight && props.errors.weight}
+              </Text>
 
               <Text style={styles.text_secondary}>Height(inches)</Text>
               <Input
                 placeholder="height in inches"
-                value={props.values.height}
-                setValue={props.handleChange('height')}
+                value={height}
+                setValue={setHeight}
               />
+              <Text style={styles.text_errors}>
+                {props.touched.height && props.errors.height}
+              </Text>
 
               <Text style={styles.text_secondary}>Age(years)</Text>
-              <Input
-                placeholder="Age in years"
-                value={props.values.age}
-                setValue={props.handleChange('age')}
-              />
+              <Input placeholder="Age in years" value={age} setValue={setAge} />
+              <Text style={styles.text_errors}>
+                {props.touched.age && props.errors.age}
+              </Text>
 
               <Text style={styles.text_secondary}>Sex</Text>
 
@@ -151,8 +136,9 @@ const DetailsScreen = () => {
 
               <Checkbox value={female} setValue={setFemale} />
               <Text style={styles.text_secondary}>Female</Text>
+              <Text style={styles.text_errors}>{props.errors.sex}</Text>
 
-              <Text style={styles.text_secondary}>Activity</Text>
+              <Text style={styles.text_secondary}>Activity(TDEE)</Text>
               {}
               <DropDownBox
                 options={[
@@ -170,6 +156,12 @@ const DetailsScreen = () => {
                 setValue={setActivity}
               />
 
+              <Text style={styles.text_errors}>
+                {props.touched.TDEE && props.errors.TDEE}
+              </Text>
+
+              <Text style={styles.text_secondary}>Target</Text>
+
               <Checkbox value={deficit} setValue={setDeficit} />
               <Text style={styles.text_secondary}>Lose weight</Text>
 
@@ -178,6 +170,10 @@ const DetailsScreen = () => {
 
               <Checkbox value={surplus} setValue={setSurplus} />
               <Text style={styles.text_secondary}>Gain weight</Text>
+
+              <Text style={styles.text_errors}>
+                {props.touched.target && props.errors.target}
+              </Text>
 
               <Button
                 onPress={props.handleSubmit}
@@ -206,6 +202,12 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     padding: 20,
     fontSize: 12,
+  },
+  text_errors: {
+    textAlign: 'left',
+    padding: 20,
+    fontSize: 10,
+    color: 'red',
   },
 });
 
