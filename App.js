@@ -1,13 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, Text} from 'react-native';
 import Navigation from './src/navigation/index';
-import LogInScreen from './src/screens/LogIn';
+import userContext from './src/contexts/userContexts/UserContext';
 
 const App = () => {
+  const [currentUser, setCurrentUser] = useState({});
+
   return (
-    <SafeAreaView style={styles.root}>
-      <Navigation />
-    </SafeAreaView>
+    <userContext.Provider value={{currentUser, setCurrentUser}}>
+      <SafeAreaView style={styles.root}>
+        <Navigation />
+      </SafeAreaView>
+    </userContext.Provider>
   );
 };
 
