@@ -1,15 +1,21 @@
 import React, {useContext} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import userContext from '../../contexts/userContexts/UserContext';
 
 const HomeScreen = () => {
   const {currentUser} = useContext(userContext);
+  const user = currentUser;
 
-  console.log('homepage', currentUser);
+  if (user.avatar_url === 'no image') {
+    user.avatar_url =
+      'https://www.seekpng.com/png/detail/402-4022635_avatar-generic-person-icon.png';
+  }
 
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>Home Page</Text>
+      <Text style={styles.text}>Hi {user.name}</Text>
+
+      <Image />
     </View>
   );
 };

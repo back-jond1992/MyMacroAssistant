@@ -15,10 +15,10 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        {/* <Stack.Screen name="Login" component={LogInScreen} />
+        <Stack.Screen name="Login" component={LogInScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-        <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} /> */}
+        <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
         <Stack.Screen name="Details" component={DetailsScreen} />
         <Stack.Screen name="HomePage" component={HomeScreen} />
       </Stack.Navigator>

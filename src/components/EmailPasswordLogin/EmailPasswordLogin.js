@@ -1,18 +1,28 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import {getUser} from '../../api/api';
+import userContext from '../../contexts/userContexts/UserContext';
 
 const EmailPasswordLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const {setCurrentUser} = useContext(userContext);
 
   const navigation = useNavigation();
 
   const onLogIn = () => {
     auth()
       .signInWithEmailAndPassword(email, password)
+      .then(response => {
+        const userEmail = response.user.email;
+        getUser(userEmail).then(response => {
+          setCurrentUser(response);
+        });
+      })
       .then(() => {
         navigation.navigate('HomePage');
       })

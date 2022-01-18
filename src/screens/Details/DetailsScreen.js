@@ -8,7 +8,7 @@ import DropDownBox from '../../components/DropDownBox/DropDownBox';
 import TDEECalculator from '../../UtilFunctions/TDEECalculator/TDEECalculator';
 import BMRCalculator from '../../UtilFunctions/BMRCalculator/BMRCalculator';
 import target from '../../UtilFunctions/Target/target';
-import postUser from '../../api/api';
+import {postUser} from '../../api/api';
 import {useNavigation} from '@react-navigation/native';
 import userContext from '../../contexts/userContexts/UserContext';
 import {Formik} from 'formik';
