@@ -27,13 +27,13 @@ const DetailsScreen = () => {
   const [maintain, setMaintain] = useState('');
   const [surplus, setSurplus] = useState('');
 
-  const {currentUser, setCurrentUser} = useContext(userContext);
+  const {setCurrentUser} = useContext(userContext);
 
   const email = auth().currentUser.email;
 
   const navigation = useNavigation();
 
-  const sex = male ? 'male' : 'female';
+  const sex = male ? 'male' : female ? 'female' : null;
 
   const BMR = BMRCalculator(sex, weight, height, age);
 
@@ -47,7 +47,9 @@ const DetailsScreen = () => {
     ? 'deficit'
     : surplus
     ? 'surplus'
-    : 'maintenance';
+    : maintain
+    ? 'maintenance'
+    : null;
 
   const newUser = {
     name: name,
@@ -63,23 +65,17 @@ const DetailsScreen = () => {
     target: targetCalories,
   };
 
-  const [user, setUser] = useState(newUser);
-
-  console.log('outside new user', user);
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
         <Formik
+          enableReinitialize={true}
           initialValues={newUser}
           validationSchema={validationSchema}
           onSubmit={values => {
-            console.log('inside values', values);
-            console.log('inside new user', newUser);
             postUser(newUser).then(response => {
-              console.log(response);
               setCurrentUser(response);
-              //     navigation.navigate('HomePage');
+              navigation.navigate('HomePage');
             });
           }}>
           {props => (

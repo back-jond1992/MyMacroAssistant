@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import userContext from '../../contexts/userContexts/UserContext';
 
 const HomeScreen = () => {
+  const {currentUser} = useContext(userContext);
+
+  console.log('homepage', currentUser);
+
   return (
     <View style={styles.root}>
       <Text style={styles.text}>Home Page</Text>
