@@ -31,7 +31,7 @@ const FacebookSignUp = () => {
         }
       })
       .then(facebookCredential => {
-        auth().signInWithCredential(facebookCredential);
+        return auth().signInWithCredential(facebookCredential);
       })
       .then(() => {
         navigation.navigate('Details');

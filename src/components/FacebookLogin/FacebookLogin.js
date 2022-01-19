@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import auth from '@react-native-firebase/auth';
 import Button from '../Button';
 import {useNavigation} from '@react-navigation/native';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+import {getUser} from '../../api/api';
+import userContext from '../../contexts/userContexts/UserContext';
 
 const FacebookLogin = () => {
+  const {setCurrentUser} = useContext(userContext);
+
   const navigation = useNavigation();
 
   const onLogInFacebook = () => {
@@ -31,10 +35,14 @@ const FacebookLogin = () => {
         }
       })
       .then(facebookCredential => {
-        auth().signInWithCredential(facebookCredential);
+        return auth().signInWithCredential(facebookCredential);
       })
-      .then(() => {
-        navigation.navigate('HomePage');
+      .then(response => {
+        const userEmail = response.user.email;
+        getUser(userEmail).then(response => {
+          setCurrentUser(response);
+          navigation.navigate('HomePage');
+        });
       })
       .catch(error => {
         alert(`${error.message}`);

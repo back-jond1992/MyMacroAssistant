@@ -24,7 +24,9 @@ const GoogleSignUp = () => {
         }
       })
       .then(googleCredential => {
-        auth().signInWithCredential(googleCredential);
+        return auth().signInWithCredential(googleCredential);
+      })
+      .then(() => {
         navigation.navigate('Details');
       })
       .catch(error => {

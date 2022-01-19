@@ -13,7 +13,14 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>Hi {user.name}</Text>
+      <Text style={styles.text_primary}>Hi {user.name}</Text>
+      <Text style={styles.text_secondary}>Weight: {user.weight}lbs</Text>
+      <Text style={styles.text_secondary}>Height: {user.height}"</Text>
+      <Text style={styles.text_secondary}>Age: {user.age} yeas old.</Text>
+      <Text style={styles.text_secondary}>
+        Maintenance calories: {user.maintenance}
+      </Text>
+      <Text style={styles.text_secondary}>Target calories: {user.target}</Text>
 
       {/* <Image /> */}
     </View>
@@ -25,10 +32,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  text: {
+  text_primary: {
     alignItems: 'center',
     padding: 20,
     fontSize: 24,
+  },
+  text_secondary: {
+    alignItems: 'center',
+    padding: 20,
+    fontSize: 12,
   },
 });
 
