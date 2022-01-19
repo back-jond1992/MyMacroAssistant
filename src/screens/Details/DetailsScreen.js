@@ -29,7 +29,12 @@ const DetailsScreen = () => {
 
   const {setCurrentUser} = useContext(userContext);
 
-  const email = auth().currentUser.email;
+  const user = auth().currentUser;
+
+  const email = user.email;
+
+  console.log(user);
+  console.log(email);
 
   const navigation = useNavigation();
 
@@ -65,6 +70,8 @@ const DetailsScreen = () => {
     target: targetCalories,
   };
 
+  console.log(newUser);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
@@ -73,7 +80,8 @@ const DetailsScreen = () => {
           initialValues={newUser}
           validationSchema={validationSchema}
           onSubmit={values => {
-            postUser(newUser).then(response => {
+            console.log(values);
+            postUser(values).then(response => {
               setCurrentUser(response);
               navigation.navigate('HomePage');
             });

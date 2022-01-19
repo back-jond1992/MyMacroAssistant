@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Button from '../Button';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {getUser} from '../../api/api';
+import userContext from '../../contexts/userContexts/UserContext';
 
 GoogleSignin.configure({
   webClientId:
@@ -10,6 +12,8 @@ GoogleSignin.configure({
 });
 
 const GoogleLogin = () => {
+  const {setCurrentUser} = useContext(userContext);
+
   const navigation = useNavigation();
 
   const onLogInGoogle = () => {
@@ -24,10 +28,14 @@ const GoogleLogin = () => {
         }
       })
       .then(googleCredential => {
-        auth().signInWithCredential(googleCredential);
+        return auth().signInWithCredential(googleCredential);
       })
-      .then(() => {
-        navigation.navigate('HomePage');
+      .then(response => {
+        const userEmail = response.user.email;
+        getUser(userEmail).then(response => {
+          setCurrentUser(response);
+          navigation.navigate('HomePage');
+        });
       })
       .catch(error => {
         alert(`${error.message}`);

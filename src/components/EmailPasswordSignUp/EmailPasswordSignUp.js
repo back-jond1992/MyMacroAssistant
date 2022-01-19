@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import userContext from '../../contexts/userContexts/UserContext';
 
 const EmailPasswordSignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
+
+  const {setCurrentUser} = useContext(userContext);
 
   const navigation = useNavigation();
 
@@ -15,10 +18,10 @@ const EmailPasswordSignUp = () => {
     if (password === passwordCheck) {
       auth()
         .createUserWithEmailAndPassword(email, password)
-        .then(() => {
+        .then(response => {
+          console.log(response);
+          setCurrentUser(response);
           console.log('User account created & signed in!');
-        })
-        .then(() => {
           navigation.navigate('Details');
         })
         .catch(error => {

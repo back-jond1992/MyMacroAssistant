@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth';
-import React from 'react';
+import React, {useContext} from 'react';
 import Button from '../Button';
 import {useNavigation} from '@react-navigation/native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -25,8 +25,6 @@ const GoogleSignUp = () => {
       })
       .then(googleCredential => {
         auth().signInWithCredential(googleCredential);
-      })
-      .then(() => {
         navigation.navigate('Details');
       })
       .catch(error => {

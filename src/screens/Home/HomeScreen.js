@@ -15,7 +15,7 @@ const HomeScreen = () => {
     <View style={styles.root}>
       <Text style={styles.text}>Hi {user.name}</Text>
 
-      <Image />
+      {/* <Image /> */}
     </View>
   );
 };

@@ -7,9 +7,13 @@ import GoogleLogin from '../../components/GoogleLogin/GoogleLogin';
 import FacebookLogin from '../../components/FacebookLogin/FacebookLogin';
 import EmailPasswordLogin from '../../components/EmailPasswordLogin';
 import ForgotPassword from '../../components/ForgotPassword/ForgotPassword';
-
+import auth from '@react-native-firebase/auth';
 const LogInScreen = () => {
   const navigation = useNavigation();
+
+  const user = auth().currentUser;
+
+  console.log(user);
 
   // const onLogInApple = () => {
   //   console.warn('Log in');

@@ -21,10 +21,8 @@ const EmailPasswordLogin = () => {
         const userEmail = response.user.email;
         getUser(userEmail).then(response => {
           setCurrentUser(response);
+          navigation.navigate('HomePage');
         });
-      })
-      .then(() => {
-        navigation.navigate('HomePage');
       })
       .catch(error => {
         if (error.code === 'auth/user-not-found') {
