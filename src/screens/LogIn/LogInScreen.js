@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ImageBackground,
+} from 'react-native';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
@@ -8,6 +14,7 @@ import FacebookLogin from '../../components/FacebookLogin/FacebookLogin';
 import EmailPasswordLogin from '../../components/EmailPasswordLogin';
 import ForgotPassword from '../../components/ForgotPassword/ForgotPassword';
 import auth from '@react-native-firebase/auth';
+
 const LogInScreen = () => {
   const navigation = useNavigation();
 

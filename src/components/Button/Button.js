@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {Text, StyleSheet, Pressable} from 'react-native';
 
 const Button = ({
   onPress,
@@ -8,6 +8,7 @@ const Button = ({
   backgroundColor,
   textColor,
   disabled,
+  icon,
 }) => {
   return (
     <Pressable
@@ -18,6 +19,7 @@ const Button = ({
         styles[`container_${type}`],
         backgroundColor ? {backgroundColor: backgroundColor} : {},
       ]}>
+      {icon}
       <Text
         style={[
           styles.text,
@@ -37,11 +39,13 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     alignItems: 'center',
     borderRadius: 5,
+    flexDirection: 'row',
   },
   container_primary: {
     backgroundColor: 'blue',
   },
   container_tertiary: {},
+  container_social: {},
   text: {
     fontWeight: 'bold',
     color: 'white',

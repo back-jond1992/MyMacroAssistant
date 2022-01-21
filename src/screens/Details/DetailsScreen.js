@@ -106,6 +106,7 @@ const DetailsScreen = () => {
                 value={avatarUrl}
                 setValue={setAvatarUrl}
               />
+              <Text style={styles.text_errors}></Text>
 
               <Text style={styles.text_secondary}>Weight(pounds)</Text>
               <Input
@@ -135,15 +136,17 @@ const DetailsScreen = () => {
 
               <Text style={styles.text_secondary}>Sex</Text>
 
-              <Checkbox value={male} setValue={setMale} />
-              <Text style={styles.text_secondary}>Male</Text>
+              <View style={styles.checkbox_container}>
+                <Checkbox value={male} setValue={setMale} />
+                <Text style={styles.text_secondary}>Male</Text>
 
-              <Checkbox value={female} setValue={setFemale} />
-              <Text style={styles.text_secondary}>Female</Text>
+                <Checkbox value={female} setValue={setFemale} />
+                <Text style={styles.text_secondary}>Female</Text>
+              </View>
               <Text style={styles.text_errors}>{props.errors.sex}</Text>
 
               <Text style={styles.text_secondary}>Activity(TDEE)</Text>
-              {}
+
               <DropDownBox
                 options={[
                   'little to no exercise and work a desk job',
@@ -166,14 +169,20 @@ const DetailsScreen = () => {
 
               <Text style={styles.text_secondary}>Target</Text>
 
-              <Checkbox value={deficit} setValue={setDeficit} />
-              <Text style={styles.text_secondary}>Lose weight</Text>
+              <View style={styles.checkbox_container}>
+                <Checkbox value={deficit} setValue={setDeficit} />
+                <Text style={styles.text_secondary}>Lose weight</Text>
+              </View>
 
-              <Checkbox value={maintain} setValue={setMaintain} />
-              <Text style={styles.text_secondary}>Maintain weight</Text>
+              <View style={styles.checkbox_container}>
+                <Checkbox value={maintain} setValue={setMaintain} />
+                <Text style={styles.text_secondary}>Maintain weight</Text>
+              </View>
 
-              <Checkbox value={surplus} setValue={setSurplus} />
-              <Text style={styles.text_secondary}>Gain weight</Text>
+              <View style={styles.checkbox_container}>
+                <Checkbox value={surplus} setValue={setSurplus} />
+                <Text style={styles.text_secondary}>Gain weight</Text>
+              </View>
 
               <Text style={styles.text_errors}>
                 {props.touched.target && props.errors.target}
@@ -201,17 +210,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 20,
     fontSize: 24,
+    color: '#000000',
+    fontWeight: 'bold',
   },
   text_secondary: {
     textAlign: 'left',
-    padding: 20,
-    fontSize: 12,
+    padding: 5,
+    fontSize: 14,
+    color: '#000000',
   },
   text_errors: {
     textAlign: 'left',
-    padding: 20,
-    fontSize: 10,
+    padding: 5,
+    fontSize: 12,
     color: 'red',
+  },
+  checkbox_container: {
+    flexDirection: 'row',
   },
 });
 
