@@ -1,12 +1,11 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import auth from '@react-native-firebase/auth';
-import Button from '../Button';
+import SocialButton from '../SocialButton/SocialButton';
 import {useNavigation} from '@react-navigation/native';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {getUser} from '../../api/api';
 import userContext from '../../contexts/userContexts/UserContext';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faFacebook} from '@fortawesome/free-brands-svg-icons';
 
 const FacebookLogin = () => {
@@ -53,12 +52,13 @@ const FacebookLogin = () => {
   };
 
   return (
-    <Button
+    <SocialButton
       onPress={onLogInFacebook}
       text={'Log in with Facebook'}
       backgroundColor={'#4267B2'}
+      button={faFacebook}
+      color={'white'}
       type={'social'}
-      icon={<FontAwesomeIcon icon={faFacebook} size={20} color="white" />}
     />
   );
 };

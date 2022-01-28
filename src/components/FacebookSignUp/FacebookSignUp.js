@@ -1,8 +1,9 @@
 import React from 'react';
-import Button from '../../components/Button';
+import SocialButton from '../../components/SocialButton';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+import {faFacebook} from '@fortawesome/free-brands-svg-icons';
 
 const FacebookSignUp = () => {
   const navigation = useNavigation();
@@ -42,10 +43,13 @@ const FacebookSignUp = () => {
   };
 
   return (
-    <Button
+    <SocialButton
       onPress={onSignUpFacebook}
       text={'Sign up with Facebook'}
       backgroundColor={'#c13584'}
+      button={faFacebook}
+      color={'white'}
+      type={'social'}
     />
   );
 };

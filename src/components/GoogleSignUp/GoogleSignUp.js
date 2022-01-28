@@ -1,8 +1,9 @@
 import auth from '@react-native-firebase/auth';
 import React, {useContext} from 'react';
-import Button from '../Button';
+import SocialButton from '../SocialButton';
 import {useNavigation} from '@react-navigation/native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {faGoogle} from '@fortawesome/free-brands-svg-icons';
 
 GoogleSignin.configure({
   webClientId:
@@ -35,10 +36,13 @@ const GoogleSignUp = () => {
   };
 
   return (
-    <Button
+    <SocialButton
       onPress={onSignUpGoogle}
       text={'Sign up with Google'}
       backgroundColor={'#4285F4'}
+      button={faGoogle}
+      color={'#DB4437'}
+      type={'social'}
     />
   );
 };

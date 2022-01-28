@@ -33,8 +33,6 @@ const LogInScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
-        <Text>Log in</Text>
-
         <EmailPasswordLogin />
 
         <ForgotPassword />
@@ -67,6 +65,7 @@ const styles = StyleSheet.create({
   text: {
     alignItems: 'center',
     padding: 20,
+    fontSize: 16,
   },
 });
 

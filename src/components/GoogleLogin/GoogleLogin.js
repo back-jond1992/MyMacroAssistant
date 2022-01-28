@@ -1,10 +1,11 @@
 import React, {useContext} from 'react';
-import Button from '../Button';
+import SocialButton from '../SocialButton';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {getUser} from '../../api/api';
 import userContext from '../../contexts/userContexts/UserContext';
+import {faGoogle} from '@fortawesome/free-brands-svg-icons';
 
 GoogleSignin.configure({
   webClientId:
@@ -43,10 +44,13 @@ const GoogleLogin = () => {
   };
 
   return (
-    <Button
+    <SocialButton
       onPress={onLogInGoogle}
       text={'Log in with Google'}
-      backgroundColor={'#4285F4'}
+      backgroundColor={'white'}
+      button={faGoogle}
+      color={'#DB4437'}
+      type={'social'}
     />
   );
 };
