@@ -8,44 +8,28 @@ import {
   ScrollView,
 } from 'react-native';
 import userContext from '../../contexts/userContexts/UserContext';
+import UserStats from '../../components/UserStats';
+import MacroCarousel from '../../components/MacroCarousel';
+import CalorieCard from '../../components/CalorieCard/';
+import ProteinCard from '../../components/ProteinCard';
 
 const screenSize = Dimensions.get('screen');
+
+const dailyMacros = [<CalorieCard />, <ProteinCard />];
 
 const HomeScreen = () => {
   const {currentUser} = useContext(userContext);
   const user = currentUser;
-
-  if (user.avatar_url === 'no image') {
-    user.avatar_url =
-      'https://www.seekpng.com/png/detail/402-4022635_avatar-generic-person-icon.png';
-  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
         <Text style={styles.text_primary}>Hi {user.name}</Text>
 
-        <View style={styles.details_container}>
-          <View style={styles.image_container}>
-            <Image style={styles.image} source={{uri: user.avatar_url}} />
-          </View>
-
-          <View style={styles.text_container}>
-            <Text style={styles.text_secondary}>Weight: {user.weight}lbs</Text>
-
-            <Text style={styles.text_secondary}>Height: {user.height}"</Text>
-
-            <Text style={styles.text_secondary}>Age: {user.age} yeas old.</Text>
-
-            <Text style={styles.text_secondary}>
-              Maintenance calories: {user.maintenance}
-            </Text>
-
-            <Text style={styles.text_secondary}>
-              Target calories: {user.target}
-            </Text>
-          </View>
-        </View>
+        <UserStats />
+      </View>
+      <View>
+        <MacroCarousel text={'Today'} cards={dailyMacros} />
       </View>
     </ScrollView>
   );
@@ -54,9 +38,6 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   root: {
     padding: 10,
-  },
-  details_container: {
-    flexDirection: 'row',
   },
   image_container: {
     justifyContent: 'flex-start',
@@ -84,6 +65,11 @@ const styles = StyleSheet.create({
     borderColor: 0x000000ff,
     width: screenSize.width * 0.3,
     height: screenSize.width * 0.3,
+  },
+  text: {
+    alignItems: 'center',
+    padding: 20,
+    fontSize: 16,
   },
 });
 

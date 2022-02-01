@@ -22,10 +22,6 @@ const LogInScreen = () => {
 
   console.log(user);
 
-  // const onLogInApple = () => {
-  //   console.warn('Log in');
-  // };
-
   const onNoAccount = () => {
     navigation.navigate('SignUp');
   };

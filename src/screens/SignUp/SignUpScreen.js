@@ -9,10 +9,6 @@ import EmailPasswordSignUp from '../../components/EmailPasswordSignUp/EmailPassw
 const SignUpScreen = () => {
   const navigation = useNavigation();
 
-  // const onSignUpApple = () => {
-  //   console.warn('Log in');
-  // };
-
   const onAlreadyHaveAccount = () => {
     navigation.navigate('Login');
   };
@@ -20,8 +16,6 @@ const SignUpScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
-        <Text style={styles.title}>Sign up</Text>
-
         <EmailPasswordSignUp />
 
         <Text style={styles.text}>or</Text>
@@ -52,6 +46,7 @@ const styles = StyleSheet.create({
   text: {
     alignItems: 'center',
     padding: 20,
+    fontSize: 16,
   },
   title: {
     fontSize: 24,
