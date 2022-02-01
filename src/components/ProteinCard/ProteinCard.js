@@ -11,11 +11,13 @@ const ProteinCard = () => {
 
 const styles = StyleSheet.create({
   card_container: {
-    margin: 10,
-    padding: 10,
+    margin: 25,
+    padding: 25,
     borderWidth: 5,
     borderColor: 'black',
     borderRadius: 5,
+    width: '100%',
+    height: '100%',
   },
   text: {
     color: 'black',

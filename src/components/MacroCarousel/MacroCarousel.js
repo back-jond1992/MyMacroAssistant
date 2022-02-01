@@ -2,15 +2,20 @@ import {View, Text, FlatList, StyleSheet} from 'react-native';
 import React from 'react';
 
 const MacroCarousel = ({text, cards}) => {
+  const ListItem = ({item}) => {
+    return <View style={styles.card}>{item}</View>;
+  };
+
   return (
     <View style={styles.container}>
       <Text>{text}</Text>
       <FlatList
         data={cards}
         keyExtractor={(_, index) => index.toString()}
+        showsHorizontalScrollIndicator={false}
         horizontal
         pagingEnabled
-        renderItem={({item}) => <View style={styles.card}>{item}</View>}
+        renderItem={({item}) => <ListItem item={item} />}
       />
     </View>
   );
@@ -18,7 +23,7 @@ const MacroCarousel = ({text, cards}) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: '100%',
+    //width: '100%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',

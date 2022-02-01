@@ -15,7 +15,12 @@ import ProteinCard from '../../components/ProteinCard';
 
 const screenSize = Dimensions.get('screen');
 
-const dailyMacros = [<CalorieCard />, <ProteinCard />];
+const dailyMacros = [
+  <CalorieCard />,
+  <ProteinCard />,
+  <CalorieCard />,
+  <ProteinCard />,
+];
 
 const HomeScreen = () => {
   const {currentUser} = useContext(userContext);
@@ -28,6 +33,7 @@ const HomeScreen = () => {
 
         <UserStats />
       </View>
+
       <View>
         <MacroCarousel text={'Today'} cards={dailyMacros} />
       </View>
