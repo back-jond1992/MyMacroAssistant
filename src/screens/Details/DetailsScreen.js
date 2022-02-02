@@ -10,7 +10,7 @@ import BMRCalculator from '../../UtilFunctions/BMRCalculator/BMRCalculator';
 import target from '../../UtilFunctions/Target/target';
 import {postUser} from '../../api/api';
 import {useNavigation} from '@react-navigation/native';
-import userContext from '../../contexts/userContexts/UserContext';
+import userContext from '../../contexts/userContexts/';
 import {Formik} from 'formik';
 import validationSchema from '../../schemas/validationSchema/validationSchema';
 

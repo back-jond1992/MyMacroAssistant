@@ -23,6 +23,7 @@ const weeklyMacros = [
 
 const HomeScreen = () => {
   const {currentUser} = useContext(userContext);
+  console.log(currentUser);
   const user = currentUser;
 
   return (
