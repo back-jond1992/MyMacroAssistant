@@ -26,21 +26,23 @@ const HomeScreen = () => {
   const user = currentUser;
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.root}>
-        <Text style={styles.text_primary}>Hi {user.name}</Text>
+    <View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.root}>
+          <Text style={styles.text_primary}>Hi {user.name}</Text>
 
-        <UserStats />
-      </View>
+          <UserStats />
+        </View>
 
-      <View>
-        <MacroCarousel text={'Today'} cards={dailyMacros} />
-      </View>
+        <View>
+          <MacroCarousel text={'Today'} cards={dailyMacros} />
+        </View>
 
-      <View>
-        <MacroCarousel text={'This Week'} cards={weeklyMacros} />
-      </View>
-    </ScrollView>
+        <View>
+          <MacroCarousel text={'This Week'} cards={weeklyMacros} />
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
