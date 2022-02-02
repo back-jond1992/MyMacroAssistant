@@ -1,10 +1,10 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 
-const ProteinCard = () => {
+const MacroCard = ({text}) => {
   return (
     <View style={styles.card_container}>
-      <Text style={styles.text}>Protein</Text>
+      <Text style={styles.text}>{text}</Text>
     </View>
   );
 };
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProteinCard;
+export default MacroCard;

@@ -8,7 +8,7 @@ const MacroCarousel = ({text, cards}) => {
 
   return (
     <View style={styles.container}>
-      <Text>{text}</Text>
+      <Text style={styles.text}>{text}</Text>
       <FlatList
         data={cards}
         keyExtractor={(_, index) => index.toString()}
@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
+  },
+  text: {
+    margin: 15,
+    fontSize: 20,
+    color: 'black',
   },
 });
 

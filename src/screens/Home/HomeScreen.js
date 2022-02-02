@@ -1,25 +1,24 @@
 import React, {useContext} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Dimensions,
-  ScrollView,
-} from 'react-native';
+import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
 import userContext from '../../contexts/userContexts/UserContext';
 import UserStats from '../../components/UserStats';
 import MacroCarousel from '../../components/MacroCarousel';
-import CalorieCard from '../../components/CalorieCard/';
-import ProteinCard from '../../components/ProteinCard';
+import MacroCard from '../../components/MacroCard';
 
 const screenSize = Dimensions.get('screen');
 
 const dailyMacros = [
-  <CalorieCard />,
-  <ProteinCard />,
-  <CalorieCard />,
-  <ProteinCard />,
+  <MacroCard text={'Calories'} />,
+  <MacroCard text={'Protein'} />,
+  <MacroCard text={'Carbs'} />,
+  <MacroCard text={'Fat'} />,
+];
+
+const weeklyMacros = [
+  <MacroCard text={'Calories'} />,
+  <MacroCard text={'Protein'} />,
+  <MacroCard text={'Carbs'} />,
+  <MacroCard text={'Fat'} />,
 ];
 
 const HomeScreen = () => {
@@ -36,6 +35,10 @@ const HomeScreen = () => {
 
       <View>
         <MacroCarousel text={'Today'} cards={dailyMacros} />
+      </View>
+
+      <View>
+        <MacroCarousel text={'This Week'} cards={weeklyMacros} />
       </View>
     </ScrollView>
   );
