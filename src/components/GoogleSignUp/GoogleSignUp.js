@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import React, {useContext} from 'react';
 import SocialButton from '../SocialButton';
+import {getUser} from '../../api/api';
 import {useNavigation} from '@react-navigation/native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {faGoogle} from '@fortawesome/free-brands-svg-icons';
@@ -16,19 +17,23 @@ const GoogleSignUp = () => {
   const onSignUpGoogle = () => {
     return GoogleSignin.signIn()
       .then(({idToken}) => {
-        if (auth().currentUser) {
-          return Promise.reject({
-            message: 'You already have an account. Go to login!',
-          });
-        } else {
-          return auth.GoogleAuthProvider.credential(idToken);
-        }
+        return auth.GoogleAuthProvider.credential(idToken);
       })
       .then(googleCredential => {
         return auth().signInWithCredential(googleCredential);
       })
-      .then(() => {
-        navigation.navigate('Details');
+      .then(response => {
+        const userEmail = response.user.email;
+        return getUser(userEmail);
+      })
+      .then(response => {
+        if (response) {
+          return Promise.reject({
+            message: 'You already have an account. Go to login!',
+          });
+        } else {
+          navigation.navigate('Details');
+        }
       })
       .catch(error => {
         alert(`${error.message}`);

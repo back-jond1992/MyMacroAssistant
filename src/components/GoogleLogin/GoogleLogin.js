@@ -20,23 +20,24 @@ const GoogleLogin = () => {
   const onLogInGoogle = () => {
     return GoogleSignin.signIn()
       .then(({idToken}) => {
-        if (!auth().currentUser) {
-          return Promise.reject({
-            message: "You don't have an account. Please Sign up!",
-          });
-        } else {
-          return auth.GoogleAuthProvider.credential(idToken);
-        }
+        return auth.GoogleAuthProvider.credential(idToken);
       })
       .then(googleCredential => {
         return auth().signInWithCredential(googleCredential);
       })
       .then(response => {
         const userEmail = response.user.email;
-        getUser(userEmail).then(response => {
+        return getUser(userEmail);
+      })
+      .then(response => {
+        if (!response) {
+          return Promise.reject({
+            message: "You don't have an account. Please Sign up!",
+          });
+        } else {
           setCurrentUser(response);
           navigation.navigate('HomePage');
-        });
+        }
       })
       .catch(error => {
         alert(`${error.message}`);

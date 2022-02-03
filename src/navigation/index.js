@@ -22,9 +22,9 @@ const Tab = createBottomTabNavigator();
 const Navigation = () => {
   const user = auth().currentUser;
 
-  const [signedIn, setSignedIn] = useState(true);
+  const [signedIn, setSignedIn] = useState(false);
 
-  return user ? (
+  return signedIn ? (
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
@@ -77,9 +77,9 @@ const Navigation = () => {
           headerTitle: props => <Header {...props} />,
           headerStyle: {backgroundColor: '#36454f'},
         }}>
-        <Stack.Screen name="Login" component={LogInScreen} />
+        {/* <Stack.Screen name="Login" component={LogInScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} /> */}
 
         <Stack.Screen name="Details" component={DetailsScreen} />
         <Stack.Screen name="HomePage" component={HomeScreen} />

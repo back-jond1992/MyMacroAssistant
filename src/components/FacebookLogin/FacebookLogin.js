@@ -27,11 +27,6 @@ const FacebookLogin = () => {
           return Promise.reject({
             message: 'Something went wrong obtaining access token',
           });
-        }
-        if (!auth().currentUser) {
-          return Promise.reject({
-            message: "You don't have an account. Please Sign up!",
-          });
         } else {
           return auth.FacebookAuthProvider.credential(data.accessToken);
         }
@@ -41,10 +36,17 @@ const FacebookLogin = () => {
       })
       .then(response => {
         const userEmail = response.user.email;
-        getUser(userEmail).then(response => {
+        return getUser(userEmail);
+      })
+      .then(response => {
+        if (!response) {
+          return Promise.reject({
+            message: "You don't have an account. Please Sign up!",
+          });
+        } else {
           setCurrentUser(response);
           navigation.navigate('HomePage');
-        });
+        }
       })
       .catch(error => {
         alert(`${error.message}`);

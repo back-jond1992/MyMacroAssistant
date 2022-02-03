@@ -1,6 +1,7 @@
 import React from 'react';
 import SocialButton from '../../components/SocialButton';
 import {useNavigation} from '@react-navigation/native';
+import {getUser} from '../../api/api';
 import auth from '@react-native-firebase/auth';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {faFacebook} from '@fortawesome/free-brands-svg-icons';
@@ -34,8 +35,18 @@ const FacebookSignUp = () => {
       .then(facebookCredential => {
         return auth().signInWithCredential(facebookCredential);
       })
-      .then(() => {
-        navigation.navigate('Details');
+      .then(response => {
+        const userEmail = response.user.email;
+        return getUser(userEmail);
+      })
+      .then(response => {
+        if (response) {
+          return Promise.reject({
+            message: 'You already have an account. Go to login!',
+          });
+        } else {
+          navigation.navigate('Details');
+        }
       })
       .catch(error => {
         alert(`${error.message}`);
