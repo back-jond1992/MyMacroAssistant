@@ -19,70 +19,71 @@ const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
+const Home = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        headerStyle: {backgroundColor: '#36454f'},
+        tabBarShowLabel: false,
+        tabBarStyle: {backgroundColor: '#36454F'},
+        tabBarInactiveTintColor: 'white',
+        tabBarActiveTintColor: '#01dee6',
+      }}>
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({color}) => {
+            return <Ionicons name="home" color={color} size={30} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="FoodIntake"
+        component={FoodIntakeScreen}
+        options={{
+          tabBarIcon: ({color}) => {
+            return (
+              <MaterialCommunityIcons
+                name="food-fork-drink"
+                color={color}
+                size={30}
+              />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({color}) => {
+            return <Ionicons name="settings" color={color} size={30} />;
+          },
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
 const Navigation = () => {
   const user = auth().currentUser;
 
   const [signedIn, setSignedIn] = useState(false);
 
-  return signedIn ? (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          headerTitle: props => <Header {...props} />,
-          headerStyle: {backgroundColor: '#36454f'},
-          tabBarShowLabel: false,
-          tabBarStyle: {backgroundColor: '#36454F'},
-          tabBarInactiveTintColor: 'white',
-          tabBarActiveTintColor: '#01dee6',
-        }}>
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarIcon: ({color}) => {
-              return <Ionicons name="home" color={color} size={30} />;
-            },
-          }}
-        />
-        <Tab.Screen
-          name="FoodIntake"
-          component={FoodIntakeScreen}
-          options={{
-            tabBarIcon: ({color}) => {
-              return (
-                <MaterialCommunityIcons
-                  name="food-fork-drink"
-                  color={color}
-                  size={30}
-                />
-              );
-            },
-          }}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{
-            tabBarIcon: ({color}) => {
-              return <Ionicons name="settings" color={color} size={30} />;
-            },
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
-  ) : (
+  return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerTitle: props => <Header {...props} />,
           headerStyle: {backgroundColor: '#36454f'},
         }}>
-        {/* <Stack.Screen name="Login" component={LogInScreen} />
+        <Stack.Screen name="Login" component={LogInScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} /> */}
-
+        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
         <Stack.Screen name="Details" component={DetailsScreen} />
-        <Stack.Screen name="HomePage" component={HomeScreen} />
+        <Stack.Screen name="HomePage" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );
