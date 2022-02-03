@@ -56,6 +56,20 @@ const DetailsScreen = () => {
     ? 'maintenance'
     : null;
 
+  const dailyMacros = {
+    calories: 0,
+    protein: 0,
+    carbs: 0,
+    fat: 0,
+  };
+
+  const weeklyMacros = {
+    calories: 0,
+    protein: 0,
+    carbs: 0,
+    fat: 0,
+  };
+
   const newUser = {
     name: name,
     email: email,
@@ -68,6 +82,8 @@ const DetailsScreen = () => {
     TDEE: TDEE,
     maintenance: maintenance,
     target: targetCalories,
+    dailyMacros: dailyMacros,
+    weeklyMacros: weeklyMacros,
   };
 
   console.log(newUser);

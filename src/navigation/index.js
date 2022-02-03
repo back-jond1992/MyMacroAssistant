@@ -78,6 +78,7 @@ const Navigation = () => {
         screenOptions={{
           headerTitle: props => <Header {...props} />,
           headerStyle: {backgroundColor: '#36454f'},
+          headerBackVisible: false,
         }}>
         <Stack.Screen name="Login" component={LogInScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />

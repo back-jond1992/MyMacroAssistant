@@ -1,10 +1,15 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 
-const MacroCard = ({text}) => {
+const MacroCard = ({text, data}) => {
   return (
     <View style={styles.card_container}>
-      <Text style={styles.text}>{text}</Text>
+      <View>
+        <Text style={styles.data}>{data}</Text>
+      </View>
+      <View>
+        <Text style={styles.text}>{text}</Text>
+      </View>
     </View>
   );
 };
@@ -22,6 +27,11 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
     fontSize: 24,
+  },
+  data: {
+    color: '#01dee6',
+    fontSize: 30,
+    fontWeight: 'bold',
   },
 });
 

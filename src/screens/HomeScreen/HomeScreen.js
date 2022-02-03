@@ -7,24 +7,33 @@ import MacroCard from '../../components/MacroCard';
 
 const screenSize = Dimensions.get('screen');
 
-const dailyMacros = [
-  <MacroCard text={'Calories'} />,
-  <MacroCard text={'Protein'} />,
-  <MacroCard text={'Carbs'} />,
-  <MacroCard text={'Fat'} />,
-];
-
-const weeklyMacros = [
-  <MacroCard text={'Calories'} />,
-  <MacroCard text={'Protein'} />,
-  <MacroCard text={'Carbs'} />,
-  <MacroCard text={'Fat'} />,
-];
-
 const HomeScreen = () => {
   const {currentUser} = useContext(userContext);
-  console.log(currentUser);
   const user = currentUser;
+
+  const dailyCalories = user.dailyMacros.calories;
+  const dailyProtein = user.dailyMacros.protein;
+  const dailyCarbs = user.dailyMacros.carbs;
+  const dailyFat = user.dailyMacros.fat;
+
+  const weeklyCalories = user.weeklyMacros.calories;
+  const weeklyProtein = user.weeklyMacros.protein;
+  const weeklyCarbs = user.weeklyMacros.carbs;
+  const weeklyFat = user.weeklyMacros.fat;
+
+  const dailyMacros = [
+    <MacroCard text={'Calories'} data={dailyCalories} />,
+    <MacroCard text={'Protein'} data={dailyProtein} />,
+    <MacroCard text={'Carbs'} data={dailyCarbs} />,
+    <MacroCard text={'Fat'} data={dailyFat} />,
+  ];
+
+  const weeklyMacros = [
+    <MacroCard text={'Calories'} data={weeklyCalories} />,
+    <MacroCard text={'Protein'} data={weeklyProtein} />,
+    <MacroCard text={'Carbs'} data={weeklyCarbs} />,
+    <MacroCard text={'Fat'} data={weeklyFat} />,
+  ];
 
   return (
     <View>
