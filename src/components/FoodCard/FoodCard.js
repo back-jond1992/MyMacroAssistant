@@ -1,15 +1,16 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 
-const MacroCard = ({text, data}) => {
+const FoodCard = ({name, calories, protein, carbs, fat}) => {
   return (
     <View style={styles.card_container}>
       <View style={styles.card_content}>
         <View>
-          <Text style={styles.data}>{data}</Text>
-        </View>
-        <View>
-          <Text style={styles.text}>{text}</Text>
+          <Text style={styles.text}>Name: {name}</Text>
+          <Text style={styles.text}>Calories: {calories}</Text>
+          <Text style={styles.text}>Protein: {protein}</Text>
+          <Text style={styles.text}>Carbs: {carbs}</Text>
+          <Text style={styles.text}>Fat: {fat}</Text>
         </View>
       </View>
     </View>
@@ -26,13 +27,14 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     marginHorizontal: 4,
     marginVertical: 6,
-    height: 150,
-    width: 170,
+    height: 250,
+    width: '100%',
   },
   card_content: {
     marginHorizontal: 18,
     marginVertical: 10,
-    alignItems: 'center',
+    padding: 5,
+    alignItems: 'flex-start',
     justifyContent: 'center',
   },
   text: {
@@ -46,4 +48,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MacroCard;
+export default FoodCard;

@@ -29,6 +29,8 @@ const Home = () => {
         tabBarStyle: {backgroundColor: '#36454F'},
         tabBarInactiveTintColor: 'white',
         tabBarActiveTintColor: '#01dee6',
+        headerForceInset: {top: 'never', bottom: 'never'},
+        headerMode: 'none',
       }}>
       <Tab.Screen
         name="Home"
@@ -79,6 +81,9 @@ const Navigation = () => {
           headerTitle: props => <Header {...props} />,
           headerStyle: {backgroundColor: '#36454f'},
           headerBackVisible: false,
+        }}
+        navigationOptions={{
+          headerForceInset: {top: 'never', bottom: 'never'},
         }}>
         <Stack.Screen name="Login" component={LogInScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
