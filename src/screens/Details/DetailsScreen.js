@@ -33,9 +33,6 @@ const DetailsScreen = () => {
 
   const email = user.email;
 
-  console.log(user);
-  console.log(email);
-
   const navigation = useNavigation();
 
   const sex = male ? 'male' : female ? 'female' : null;
@@ -70,6 +67,8 @@ const DetailsScreen = () => {
     fat: 0,
   };
 
+  const dailyFoodItems = [];
+
   const newUser = {
     name: name,
     email: email,
@@ -84,12 +83,15 @@ const DetailsScreen = () => {
     target: targetCalories,
     dailyMacros: dailyMacros,
     weeklyMacros: weeklyMacros,
+    dailyFoodItems: dailyFoodItems,
   };
 
   console.log(newUser);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled">
       <View style={styles.root}>
         <Formik
           enableReinitialize={true}

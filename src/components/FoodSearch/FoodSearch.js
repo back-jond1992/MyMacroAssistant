@@ -1,10 +1,11 @@
 import {View, Text, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Input from '../Input';
 import Button from '../Button';
-import {getFood} from '../../api/api';
+import {getFood, patchUser} from '../../api/api';
 import FoodCard from '../FoodCard';
-import {ScrollView} from 'react-native-gesture-handler';
+import userContext from '../../contexts/userContexts/UserContext';
+import BulletList from '../BulletList';
 
 const FoodSearch = () => {
   const [query, setQuery] = useState('');
@@ -13,6 +14,11 @@ const FoodSearch = () => {
   const [protein, setProtein] = useState(0);
   const [carbs, setCarbs] = useState(0);
   const [fat, setFat] = useState(0);
+
+  const {currentUser, setCurrentUser} = useContext(userContext);
+  const user = currentUser;
+
+  console.log(user);
 
   const searchFood = () => {
     getFood(query).then(response => {
@@ -25,14 +31,33 @@ const FoodSearch = () => {
     });
   };
 
+  const addFood = () => {
+    const update = {
+      dailyMacros: {
+        calories: user.dailyMacros.calories + calories,
+        protein: user.dailyMacros.protein + protein,
+        carbs: user.dailyMacros.carbs + carbs,
+        fat: user.dailyMacros.fat + fat,
+      },
+    };
+    patchUser(user._id, update).then(response => {
+      setCurrentUser(response);
+    });
+  };
+
   return (
-    <ScrollView keyboardShouldPersistTaps="handled">
-      <View style={styles.root}>
-        <Text style={styles.title}>What have you eaten?</Text>
-        <Input placeholder="Search" value={query} setValue={setQuery} />
+    <View>
+      <View style={styles.search_container}>
+        <Input
+          placeholder="'e.g 175g chicken breast'"
+          value={query}
+          setValue={setQuery}
+        />
 
-        <Button onPress={searchFood} />
+        <Button onPress={searchFood} text={'Find Food'} />
+      </View>
 
+      <View style={styles.card_container}>
         <FoodCard
           name={name}
           calories={calories}
@@ -41,7 +66,8 @@ const FoodSearch = () => {
           fat={fat}
         />
       </View>
-    </ScrollView>
+      <Button onPress={addFood} />
+    </View>
   );
 };
 
@@ -55,6 +81,25 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'black',
+  },
+  text: {
+    color: 'black',
+    fontSize: 16,
+    lineHeight: 25,
+  },
+  text_important: {
+    color: '#01dee6',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  search_container: {
+    margin: 10,
+  },
+  text_container: {
+    margin: 10,
+  },
+  card_container: {
+    marin: 10,
   },
 });
 

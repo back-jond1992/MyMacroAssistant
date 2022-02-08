@@ -24,6 +24,16 @@ const postUser = newUser => {
     .catch(error => console.log(error));
 };
 
+const patchUser = (id, update) => {
+  return db
+    .post(`/user${id}`, update)
+    .then(res => {
+      console.log(res.data.user);
+      return res.data.user;
+    })
+    .catch(error => console.log(error));
+};
+
 // Calorie Ninja API calls
 
 const calorieNinja = axios.create({
@@ -43,4 +53,4 @@ const getFood = query => {
     .catch(error => console.log(error));
 };
 
-export {postUser, getUser, getFood};
+export {postUser, getUser, patchUser, getFood};
