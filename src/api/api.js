@@ -25,10 +25,11 @@ const postUser = newUser => {
 };
 
 const patchUser = (id, update) => {
+  console.log('api', id, update);
   return db
-    .post(`/user${id}`, update)
+    .patch(`/user/${id}`, update)
     .then(res => {
-      console.log(res.data.user);
+      console.log(res);
       return res.data.user;
     })
     .catch(error => console.log(error));

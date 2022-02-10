@@ -18,8 +18,6 @@ const FoodSearch = () => {
   const {currentUser, setCurrentUser} = useContext(userContext);
   const user = currentUser;
 
-  console.log(user);
-
   const searchFood = () => {
     getFood(query).then(response => {
       let food = response[0];
@@ -32,15 +30,28 @@ const FoodSearch = () => {
   };
 
   const addFood = () => {
-    const update = {
-      dailyMacros: {
-        calories: user.dailyMacros.calories + calories,
-        protein: user.dailyMacros.protein + protein,
-        carbs: user.dailyMacros.carbs + carbs,
-        fat: user.dailyMacros.fat + fat,
-      },
+    user.dailyFoodItems.push(name);
+    const dailyMacros = {
+      calories: user.dailyMacros.calories + calories,
+      protein: user.dailyMacros.protein + protein,
+      carbs: user.dailyMacros.carbs + carbs,
+      fat: user.dailyMacros.fat + fat,
     };
+    const weeklyMacros = {
+      calories: user.weeklyMacros.calories + calories,
+      protein: user.weeklyMacros.protein + protein,
+      carbs: user.weeklyMacros.carbs + carbs,
+      fat: user.weeklyMacros.fat + fat,
+    };
+    const update = {
+      dailyMacros: dailyMacros,
+      weeklyMacros: weeklyMacros,
+      dailyFoodItems: user.dailyFoodItems,
+    };
+    console.log('food items', user.dailyFoodItems);
+    console.log('update', update);
     patchUser(user._id, update).then(response => {
+      console.log('response', response);
       setCurrentUser(response);
     });
   };
